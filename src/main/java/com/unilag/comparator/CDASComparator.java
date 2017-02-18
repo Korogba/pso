@@ -44,12 +44,15 @@ public class CDASComparator extends ChainedComparator {
      */
     private double delta;
 
+    //ToDo: Remove; this is for tests only
+    private CDASObjectiveComparator cdasObjectiveComparator;
     /**
      * Constructs a CDAS dominance comparator.
      * @param particles CDAS requires all the particles in the front
      */
     public CDASComparator(Solution[] particles, double delta) {
-        super(new AggregateConstraintComparator(), new CDASObjectiveComparator(particles, delta));
+        super(new AggregateConstraintComparator(), new SCDASObjectiveComparator(particles, delta));
+        this.cdasObjectiveComparator = new CDASObjectiveComparator(particles, delta);
         this.particles = particles;
         this.delta = delta;
     }
@@ -64,6 +67,10 @@ public class CDASComparator extends ChainedComparator {
 
     public double getDelta() {
         return delta;
+    }
+
+    public CDASObjectiveComparator getCdasObjectiveComparator() {
+        return cdasObjectiveComparator;
     }
 
     public void setDelta(double delta) {
