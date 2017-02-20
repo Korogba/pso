@@ -1,8 +1,9 @@
 package com.unilag.comparator;
 
-import org.moeaframework.core.Solution;
 import org.moeaframework.core.comparator.AggregateConstraintComparator;
 import org.moeaframework.core.comparator.ChainedComparator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by @Kaba_Y on 22/01/2017
@@ -34,43 +35,25 @@ public class CDASComparator extends ChainedComparator {
 
     private static final long serialVersionUID = -7897049969086106070L;
 
-    /**
-     * The particles.
-     */
-    private Solution[] particles;
+    private static final Logger log = LoggerFactory.getLogger(CDASComparator.class);
+
 
     /**
      * Small value in calculating the origin
      */
     private double delta;
 
-    //ToDo: Remove; this is for tests only
-    private CDASObjectiveComparator cdasObjectiveComparator;
     /**
      * Constructs a CDAS dominance comparator.
-     * @param particles CDAS requires all the particles in the front
+     * @param delta CDAS requires a user defined parameter
      */
-    public CDASComparator(Solution[] particles, double delta) {
-        super(new AggregateConstraintComparator(), new SCDASObjectiveComparator(particles, delta));
-        this.cdasObjectiveComparator = new CDASObjectiveComparator(particles, delta);
-        this.particles = particles;
+    public CDASComparator(double delta) {
+        super(new AggregateConstraintComparator(), new CDASObjectiveComparator(delta));
         this.delta = delta;
-    }
-
-    public Solution[] getParticles() {
-        return particles;
-    }
-
-    public void setParticles(Solution[] particles) {
-        this.particles = particles;
     }
 
     public double getDelta() {
         return delta;
-    }
-
-    public CDASObjectiveComparator getCdasObjectiveComparator() {
-        return cdasObjectiveComparator;
     }
 
     public void setDelta(double delta) {

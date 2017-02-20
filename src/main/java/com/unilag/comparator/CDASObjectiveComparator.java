@@ -13,32 +13,14 @@ public class CDASObjectiveComparator implements DominanceComparator, Comparator<
     private static final long serialVersionUID = 7572746976131192952L;
 
     private static final Logger log = LoggerFactory.getLogger(CDASObjectiveComparator.class);
-    public static final String CDAS_FITNESS_ATTRIBUTE = "cdas";
 
-    public CDASObjectiveComparator (Solution[] particles, double userDefinedParameter) {
-        if(particles.length <= 0 || userDefinedParameter <= 0 || userDefinedParameter >=1) {
+    private double userDefinedParameter;
+
+    public CDASObjectiveComparator (double userDefinedParameter) {
+        if(userDefinedParameter <= 0 || userDefinedParameter >=1) {
             throw new IllegalArgumentException("Illegal arguments supplied");
         }
-        int objectiveCount = particles[0].getNumberOfObjectives();
-
-
-        for(Solution particle : particles) {
-            double vectorSum = 0;
-            double[] cdasFitnessAttribute = new double[objectiveCount];
-            for (int i = 0; i < objectiveCount; i++) {
-                vectorSum += Math.pow(particle.getObjective(i), 2);
-            }
-            double vectorNorm = Math.sqrt(vectorSum);
-            log.info("Vector Norm: " + vectorNorm);
-            for(int j = 0; j < objectiveCount; j++) {
-                double omegaAngle = Math.acos(particle.getObjective(j)/vectorNorm);
-                log.info("Omega Angle: " + omegaAngle);
-                double phiAngle = Math.PI * userDefinedParameter;
-                log.info("Phi Angle: " + phiAngle);
-                cdasFitnessAttribute[j] =  (vectorNorm * Math.sin(phiAngle + omegaAngle))/Math.sin(phiAngle);
-            }
-            particle.setAttribute(CDAS_FITNESS_ATTRIBUTE, cdasFitnessAttribute);
-        }
+        this.userDefinedParameter = userDefinedParameter;
     }
 
     /**
@@ -58,13 +40,16 @@ public class CDASObjectiveComparator implements DominanceComparator, Comparator<
         boolean dominateOne = false;
         boolean dominateTwo = false;
 
+        double[] firstSolutionAttribute = getModifiedFitnessValue(firstSolution);
+        double[] secondSolutionAttribute = getModifiedFitnessValue(secondSolution);
+
         for (int i = 0; i < firstSolution.getNumberOfObjectives(); i++) {
-            if ((Double) firstSolution.getAttribute(CDAS_FITNESS_ATTRIBUTE) < (Double) secondSolution.getAttribute(CDAS_FITNESS_ATTRIBUTE)) {
+            if (firstSolutionAttribute[i] < secondSolutionAttribute[i]) {
                 dominateOne = true;
                 if (dominateTwo) {
                     return 0;
                 }
-            } else if ((Double)firstSolution.getAttribute(CDAS_FITNESS_ATTRIBUTE) > (Double) secondSolution.getAttribute(CDAS_FITNESS_ATTRIBUTE)) {
+            } else if (firstSolutionAttribute[i] > secondSolutionAttribute[i]) {
                 dominateTwo = true;
                 if (dominateOne) {
                     return 0;
@@ -79,5 +64,31 @@ public class CDASObjectiveComparator implements DominanceComparator, Comparator<
         } else {
             return 1;
         }
+    }
+
+    /**
+     * Compares the two solutions using a CDAS dominance relation, returning
+     * {@code -1} if {@code firstSolution} dominates {@code secondSolution}, {@code 1} if
+     * {@code secondSolution} dominates {@code firstSolution}, and {@code 0} if the
+     * solutions are non-dominated.
+     *
+     * @param particle the first solution
+     * @return {@link Double[]}, the modified fitness values for this particle with
+     *                           {@link CDASObjectiveComparator#userDefinedParameter} parameter
+     */
+    private double[] getModifiedFitnessValue(Solution particle) {
+        int objectiveCount = particle.getNumberOfObjectives();
+        double vectorSum = 0;
+        double[] cdasFitnessAttribute = new double[objectiveCount];
+        for (int i = 0; i < objectiveCount; i++) {
+            vectorSum += Math.pow(particle.getObjective(i), 2);
+        }
+        double vectorNorm = Math.sqrt(vectorSum);
+        for(int j = 0; j < objectiveCount; j++) {
+            double omegaAngle = Math.acos(particle.getObjective(j)/vectorNorm);
+            double phiAngle = Math.PI * userDefinedParameter;
+            cdasFitnessAttribute[j] =  (vectorNorm * Math.sin(phiAngle + omegaAngle))/Math.sin(phiAngle);
+        }
+        return  cdasFitnessAttribute;
     }
 }

@@ -8,31 +8,31 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import static com.unilag.interfaces.SumFitnessEvaluator.WSUM_FITNESS_ATTRIBUTE;
+import static org.moeaframework.core.FitnessEvaluator.FITNESS_ATTRIBUTE;
 
 /**
- * Compares two solutions based on their {@code WSUM_FITNESS_ATTRIBUTE} value.
+ * Compares two solutions based on their {@code FITNESS_ATTRIBUTE} value.
  * Follows the model of {@link org.moeaframework.core.comparator.FitnessComparator}
  *
- * @see com.unilag.fitness.WSumFitnessEvaluator
+ * @see com.unilag.fitness.ShiftBasedDensityEvaluator
  */
-public class WSumComparator implements DominanceComparator, Comparator<Solution>, Serializable {
+public class ShiftBasedDensityComparator implements DominanceComparator, Comparator<Solution>, Serializable {
 
-    private static final long serialVersionUID = -4071122793199952834L;
+    private static final long serialVersionUID = -6289229153336051876L;
 
     private boolean largerValuesPreferred;
 
-    private static final Logger log = LoggerFactory.getLogger(WSumComparator.class);
+    private static final Logger log = LoggerFactory.getLogger(ShiftBasedDensityComparator.class);
 
 
     /**
      * Constructs a dominance comparator for comparing solutions based on their
-     * {@code WSUM_FITNESS_ATTRIBUTE} value.
+     * {@code FITNESS_ATTRIBUTE} value.
      *
      * @param largerValuesPreferred {@code true} if larger fitness values are
      *        preferred; otherwise smaller fitness values are preferred
      */
-    public WSumComparator(boolean largerValuesPreferred) {
+    public ShiftBasedDensityComparator(boolean largerValuesPreferred) {
         super();
         this.largerValuesPreferred = largerValuesPreferred;
     }
@@ -40,7 +40,7 @@ public class WSumComparator implements DominanceComparator, Comparator<Solution>
     @Override
     public int compare(Solution firstSolution, Solution secondSolution) {
         return (largerValuesPreferred ? -1 : 1) * Double.compare(
-                (Double)firstSolution.getAttribute(WSUM_FITNESS_ATTRIBUTE),
-                (Double)secondSolution.getAttribute(WSUM_FITNESS_ATTRIBUTE));
+                (Double)firstSolution.getAttribute(FITNESS_ATTRIBUTE),
+                (Double)secondSolution.getAttribute(FITNESS_ATTRIBUTE));
     }
 }

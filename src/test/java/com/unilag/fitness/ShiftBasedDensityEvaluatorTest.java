@@ -1,5 +1,6 @@
 package com.unilag.fitness;
 
+import com.unilag.comparator.CDASObjectiveComparatorTest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,11 +16,11 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasProperty;
 
 /**
- * Tests the {@link ShiftBasedDensityEstimator} class.
+ * Tests the {@link ShiftBasedDensityEvaluator} class.
  */
-public class ShiftBasedDensityEstimatorTest {
+public class ShiftBasedDensityEvaluatorTest {
 
-    private ShiftBasedDensityEstimator shiftBasedDensityEstimator;
+    private ShiftBasedDensityEvaluator shiftBasedDensityEvaluator;
     private Solution solutionA;
     private Solution solutionB;
     private Solution solutionC;
@@ -33,7 +34,7 @@ public class ShiftBasedDensityEstimatorTest {
      */
     @Before
     public void setUp() {
-        shiftBasedDensityEstimator = new ShiftBasedDensityEstimator();
+        shiftBasedDensityEvaluator = new ShiftBasedDensityEvaluator();
         solutionA = new Solution(new double[] {10, 17});
         solutionB = new Solution(new double[] {1, 18});
         solutionC = new Solution(new double[] {11, 6});
@@ -47,7 +48,7 @@ public class ShiftBasedDensityEstimatorTest {
      */
     @After
     public void tearDown() {
-        shiftBasedDensityEstimator = null;
+        shiftBasedDensityEvaluator = null;
         solutionA = null;
         solutionB = null;
         solutionC = null;
@@ -57,12 +58,12 @@ public class ShiftBasedDensityEstimatorTest {
 
 
     /**
-     * Tests the {@link ShiftBasedDensityEstimator}'s getShiftedPopulationForIndividual() method.
+     * Tests the {@link ShiftBasedDensityEvaluator}'s getShiftedPopulationForIndividual() method.
      */
     @Test
     @SuppressWarnings("unchecked")
     public void testShiftPopulation() {
-        List<Solution> aShifts = shiftBasedDensityEstimator.getShiftedPopulationForIndividual(solutionA, population);
+        List<Solution> aShifts = shiftBasedDensityEvaluator.getShiftedPopulationForIndividual(solutionA, population);
 
         //Assert that the appropriate size is returned
         Assert.assertEquals(aShifts.size(), 3);
@@ -79,7 +80,7 @@ public class ShiftBasedDensityEstimatorTest {
         //Assert that the original population is not modified
         Assert.assertThat(population, containsInAnyOrder(solutionA, solutionB, solutionC, solutionD));
 
-        List<Solution> bShifts = shiftBasedDensityEstimator.getShiftedPopulationForIndividual(solutionB, population);
+        List<Solution> bShifts = shiftBasedDensityEvaluator.getShiftedPopulationForIndividual(solutionB, population);
 
         //Assert that the appropriate size is returned
         Assert.assertEquals(aShifts.size(), 3);
@@ -96,7 +97,7 @@ public class ShiftBasedDensityEstimatorTest {
         //Assert that the original population is not modified
         Assert.assertThat(population, containsInAnyOrder(solutionA, solutionB, solutionC, solutionD));
 
-        List<Solution> cShifts = shiftBasedDensityEstimator.getShiftedPopulationForIndividual(solutionC, population);
+        List<Solution> cShifts = shiftBasedDensityEvaluator.getShiftedPopulationForIndividual(solutionC, population);
 
         //Assert that the appropriate size is returned
         Assert.assertEquals(aShifts.size(), 3);
@@ -113,7 +114,7 @@ public class ShiftBasedDensityEstimatorTest {
         //Assert that the original population is not modified
         Assert.assertThat(population, containsInAnyOrder(solutionA, solutionB, solutionC, solutionD));
 
-        List<Solution> dShifts = shiftBasedDensityEstimator.getShiftedPopulationForIndividual(solutionD, population);
+        List<Solution> dShifts = shiftBasedDensityEvaluator.getShiftedPopulationForIndividual(solutionD, population);
 
         //Assert that the appropriate size is returned
         Assert.assertEquals(aShifts.size(), 3);
@@ -133,10 +134,10 @@ public class ShiftBasedDensityEstimatorTest {
     }
 
     /**
-     * Tests that {@link ShiftBasedDensityEstimator} properly prunes a {@link FitnessBasedArchive} when
+     * Tests that {@link ShiftBasedDensityEvaluator} properly prunes a {@link FitnessBasedArchive} when
      * a solution is added to exceed the {@link FitnessBasedArchive}'s size
      * Note the use of the default Pareto Comparator here: All solutions are non-dominated wrt to each other
-     * For integration tests with CDAS, {@link ShiftBasedDensityEstimatorTest#testIntegrationWithCDAS()}
+     * For integration tests with CDAS, {@link CDASObjectiveComparatorTest#testIntegration()} ()}
      * Actual shift-based values of A = 1 + 1 + 8 = 10
      * Actual shift-based values of B = 9 + 10 + 17 = 36
      * Actual shift-based values of C = 11 + 12 + 7 = 30
@@ -144,7 +145,7 @@ public class ShiftBasedDensityEstimatorTest {
      */
     @Test
     public void testShiftBasedDensityEstimator() {
-        FitnessBasedArchive fitnessBasedArchive = new FitnessBasedArchive(shiftBasedDensityEstimator, 2);
+        FitnessBasedArchive fitnessBasedArchive = new FitnessBasedArchive(shiftBasedDensityEvaluator, 2);
         fitnessBasedArchive.add(solutionA);
         fitnessBasedArchive.add(solutionB);
 
