@@ -2,8 +2,6 @@ package com.unilag.comparator;
 
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.comparator.DominanceComparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -21,8 +19,6 @@ public class WSumComparator implements DominanceComparator, Comparator<Solution>
     private static final long serialVersionUID = -4071122793199952834L;
 
     private boolean largerValuesPreferred;
-
-    private static final Logger log = LoggerFactory.getLogger(WSumComparator.class);
 
 
     /**

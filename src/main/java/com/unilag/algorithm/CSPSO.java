@@ -75,7 +75,7 @@ public class CSPSO extends AbstractPSO {
         super(problem, swarmSize, leaderSize, new WSumComparator(true),
                 new WSumComparator(false),
                 new DoubleComparatorArchive(new ShiftBasedDensityEvaluator(),
-                        2, new CDASComparator(userDefinedParameter), new FitnessComparator(true)),
+                        leaderSize, new CDASComparator(userDefinedParameter), new FitnessComparator(true)),
                 null,
                 new PM(mutationProbability, distributionIndex));
 

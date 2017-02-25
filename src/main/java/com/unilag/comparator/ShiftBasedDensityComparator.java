@@ -2,8 +2,6 @@ package com.unilag.comparator;
 
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.comparator.DominanceComparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -21,9 +19,6 @@ public class ShiftBasedDensityComparator implements DominanceComparator, Compara
     private static final long serialVersionUID = -6289229153336051876L;
 
     private boolean largerValuesPreferred;
-
-    private static final Logger log = LoggerFactory.getLogger(ShiftBasedDensityComparator.class);
-
 
     /**
      * Constructs a dominance comparator for comparing solutions based on their

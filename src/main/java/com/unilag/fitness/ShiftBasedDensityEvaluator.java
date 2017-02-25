@@ -5,15 +5,11 @@ import org.moeaframework.core.FitnessEvaluator;
 import org.moeaframework.core.Population;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.comparator.ObjectiveComparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShiftBasedDensityEvaluator implements FitnessEvaluator {
-
-    private static final Logger log = LoggerFactory.getLogger(ShiftBasedDensityEvaluator.class);
 
     /**
      * Constructs a new shift-based density fitness evaluator.

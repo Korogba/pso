@@ -2,8 +2,6 @@ package com.unilag.comparator;
 
 import org.moeaframework.core.comparator.AggregateConstraintComparator;
 import org.moeaframework.core.comparator.ChainedComparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by @Kaba_Y on 22/01/2017
@@ -34,8 +32,6 @@ import org.slf4j.LoggerFactory;
 public class CDASComparator extends ChainedComparator {
 
     private static final long serialVersionUID = -7897049969086106070L;
-
-    private static final Logger log = LoggerFactory.getLogger(CDASComparator.class);
 
 
     /**

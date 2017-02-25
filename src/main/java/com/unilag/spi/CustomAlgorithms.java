@@ -73,7 +73,7 @@ public class CustomAlgorithms extends AlgorithmProvider {
 
         int populationSize = (int)properties.getDouble("populationSize", 100);
         int archiveSize = (int)properties.getDouble("archiveSize", 100);
-        double userDefinedParameter = 0.25;
+        double userDefinedParameter = 0.5;
         double mutationProbability = properties.getDouble("pm.rate",
                 1.0 / problem.getNumberOfVariables());
         double distributionIndex = properties.getDouble("pm.distributionIndex",

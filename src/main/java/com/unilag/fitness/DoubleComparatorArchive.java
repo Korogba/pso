@@ -6,8 +6,6 @@ import org.moeaframework.core.FitnessEvaluator;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.comparator.DominanceComparator;
 import org.moeaframework.core.comparator.ParetoDominanceComparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 
@@ -21,8 +19,6 @@ import java.util.Comparator;
   * @see org.moeaframework.core.fitness.FitnessBasedArchive
   */
 public class DoubleComparatorArchive extends AbstractNonDominatedPopulation {
-
-    private static final Logger log = LoggerFactory.getLogger(DoubleComparatorArchive.class);
 
 
     /**

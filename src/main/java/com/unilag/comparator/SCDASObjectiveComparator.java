@@ -2,8 +2,6 @@ package com.unilag.comparator;
 
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.comparator.DominanceComparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -11,8 +9,6 @@ import java.util.Comparator;
 public class SCDASObjectiveComparator implements DominanceComparator, Comparator<Solution>, Serializable {
 
     private static final long serialVersionUID = 7786775961720339760L;
-
-    private static final Logger log = LoggerFactory.getLogger(SCDASObjectiveComparator.class);
 
 
     /**

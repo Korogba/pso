@@ -3,8 +3,6 @@ package com.unilag.fitness;
 import com.unilag.interfaces.SumFitnessEvaluator;
 import org.moeaframework.core.Population;
 import org.moeaframework.core.Solution;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 
@@ -29,8 +27,6 @@ import java.io.Serializable;
 public class WSumFitnessEvaluator implements SumFitnessEvaluator, Serializable {
 
     private static final long serialVersionUID = -1779814832721413540L;
-
-    private static final Logger log = LoggerFactory.getLogger(WSumFitnessEvaluator.class);
 
     private Solution particle;
 

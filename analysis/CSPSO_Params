@@ -1,0 +1,6 @@
+populationSize 10 100
+archiveSize 10 100
+maxEvaluations 500 5000
+userDefinedParameter 0.0 1.0
+pm.rate 0.0 1.0
+pm.distributionIndex 0.0 500.0
