@@ -4,3 +4,4 @@ maxEvaluations 10000 1000000
 userDefinedParameter 0.0 1.0
 pm.rate 0.0 1.0
 pm.distributionIndex 0.0 500.0
+localArchiveSize 1 25

@@ -1,0 +1,5 @@
+populationSize 10 100
+maxEvaluations 10000 1000000
+de.crossoverRate 0.0 1.0
+de.stepSize 0.0 1.0
+userDefinedParameter 0.0 1.0

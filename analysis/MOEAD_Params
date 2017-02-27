@@ -1,5 +1,5 @@
 populationSize 10 100
-maxEvaluations 500 5000
+maxEvaluations 10000 1000000
 neighborhoodSize 0.0 0.2
 delta 0.0 1.0
 eta 0.0 0.02

@@ -1,75 +1,67 @@
 package com.unilag;
 
+import org.moeaframework.Analyzer;
 import org.moeaframework.Executor;
 import org.moeaframework.analysis.plot.Plot;
 import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Solution;
 
+/**
+ * Main method
+ */
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args){
 
-//        Analyzer analyzer = new Analyzer()
-//                .withProblem("DTLZ2_10")
-//                .includeAllMetrics()
-//                .showStatisticalSignificance();
-//
-//        Executor executor = new Executor()
-//                .withProblem("DTLZ2_10")
-//                .withMaxEvaluations(100);
-//
-//
-//        analyzer.addAll("NSGA-III",
-//                executor.              withAlgorithm("NSGA-III").runSeeds(10));
-//        analyzer.addAll("MOEAD",
-//                executor.withAlgorithm("MOEAD").runSeeds(10));
-//        analyzer.addAll("CSPSO",
-//                executor.withAlgorithm("CSPSO").runSeeds(10));
-//
-//        analyzer.printAnalysis();
+        Analyzer analyzer = new Analyzer()
+                .withProblem("DTLZ2_10")
+                .includeAllMetrics()
+                .showStatisticalSignificance();
 
-        NondominatedPopulation nsgaII = new Executor()
-                    .withProblem("")
-                .withAlgorithm("NSGAII")
-                .withMaxEvaluations(10000)
-                .run();
+        Executor executor = new Executor()
+                .withProblem("DTLZ2_10")
+                .withMaxEvaluations(10000);
 
-        NondominatedPopulation moead = new Executor()
-                .withProblem("DTLZ2_2")
-                .withAlgorithm("MOEAD")
-                .withMaxEvaluations(10000)
-                .run();
+        analyzer.addAll("CSPSO", executor.withAlgorithm("CSPSO").runSeeds(50));
+
+        analyzer.addAll("SMPSO", executor.withAlgorithm("SMPSO").runSeeds(50));
+
+        analyzer.printAnalysis();
 
         NondominatedPopulation cspso = new Executor()
-                .withProblem("DTLZ2_2")
+                .withProblem("UF1")
                 .withAlgorithm("CSPSO")
                 .withMaxEvaluations(10000)
                 .run();
-
+        NondominatedPopulation smpso = new Executor()
+                .withProblem("UF1")
+                .withAlgorithm("SMPSO")
+                .withMaxEvaluations(10000)
+                .run();
         Plot plot = new Plot();
-
-        plot.add("NSGA-II", nsgaII)
-            .add("MOEAD", moead)
-            .add("CSPSO", cspso);
-
+        plot.add("CSPSO", cspso);
+        plot.add("SMPSO", smpso);
         plot.show();
 
-        System.out.println("CSPSO: with archive size - " + cspso.size());
-        for(Solution solution : cspso) {
-            System.out.println(solution.getObjective(0) + " " + solution.getObjective(1));
+        int k = 1;
+        for (Solution solution : smpso) {
+            System.out.println(k+": ");
+            for(int i = 0; i < solution.getNumberOfObjectives(); i++) {
+                System.out.print(solution.getObjective(i) + " ");
+            }
+            System.out.print("\nEnd of " + k + "\n");
+            k++;
         }
 
-        System.out.println("=========================================================================================");
+        System.out.println("\n===================================================================================================");
 
-        System.out.println("NSGA: with archive size - " + nsgaII.size());
-        for(Solution solution : nsgaII) {
-            System.out.println(solution.getObjective(0) + " " + solution.getObjective(1));
-        }
-
-        System.out.println("=========================================================================================");
-
-        System.out.println("MOEAD: with archive size - " + moead.size());
-        for(Solution solution : nsgaII) {
-            System.out.println(solution.getObjective(0) + " " + solution.getObjective(1));
+        int j = 1;
+        for (Solution solution : cspso) {
+            System.out.println(j+": ");
+            for(int i = 0; i < solution.getNumberOfObjectives(); i++) {
+                System.out.print(solution.getObjective(i) + " ");
+            }
+            System.out.print("\nEnd of " + j + "\n");
+            j++;
         }
     }
 }

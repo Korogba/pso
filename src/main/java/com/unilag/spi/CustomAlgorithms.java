@@ -48,7 +48,10 @@ public class CustomAlgorithms extends AlgorithmProvider {
 
         try {
             if(name.equalsIgnoreCase("CSPSO")) {
-                return newCSPSO(typedProperties, problem);
+                return newCSPSO(typedProperties, problem, 0.55);
+
+            } else if(name.equalsIgnoreCase("CDASPSO")) {
+                return newCSPSO(typedProperties, problem, 0.5);
 
             } else {
                 return null;
@@ -66,14 +69,13 @@ public class CustomAlgorithms extends AlgorithmProvider {
      * @param problem the problem
      * @return a new {@code SMPSO} instance
      */
-    private Algorithm newCSPSO(TypedProperties properties, Problem problem) {
+    private Algorithm newCSPSO(TypedProperties properties, Problem problem, double userDefinedParameter) {
         if (!checkType(RealVariable.class, problem)) {
             throw new FrameworkException("unsupported decision variable type");
         }
 
         int populationSize = (int)properties.getDouble("populationSize", 100);
         int archiveSize = (int)properties.getDouble("archiveSize", 100);
-        double userDefinedParameter = 0.5;
         double mutationProbability = properties.getDouble("pm.rate",
                 1.0 / problem.getNumberOfVariables());
         double distributionIndex = properties.getDouble("pm.distributionIndex",
